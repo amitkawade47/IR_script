@@ -12,6 +12,7 @@ import os, os.path
 import subprocess
 import string
 import json
+import datetime
 
 
 csvDbName ="Irdb_csv"
@@ -23,7 +24,7 @@ csvFileData = []
 keyCodeArray =[]
 keyNameArray =[]
 
-
+matchProtocol = "NEC"
 csvFileHandler = ""
 jsonFileHandler =""
 jsonFileName =""
@@ -32,23 +33,39 @@ remoteName = ""
 protocolName = ""
 deviceNo = ""
 subdeviceNo = ""
-
+logFile =""
 command = ""
 response =""
 prontoLen = 0
-
 DEBUG = True
 DEBUGFILEDATA = False #for printing file content
 DEBUGCMDDATA = False #for irpMaster command respose
 DEBUGPRONTO = False #for printing generated pronto
-DEBUGJSON = True # for printing json
+DEBUGJSON = False # for printing json
 LOG = True
-DBCREAT = False  #for json database log
+DBCREAT = True  #for json database log
 FILEDATA = False #for csv file data
 
 EOF = True
+
+def errorlog(logFileObj,log):
+    logFileObj.write(log)
+    print log
+
+
 def main():
-    ############ Getting comapny List from database folder ##########
+    ############# Creating Log file #################################
+    try:
+        logFileName = str(datetime.datetime.now())
+        logFileName= string.replace(logFileName.split('.')[0],'-','_')
+        logFileName = string.replace(logFileName,':','_')
+        logFile =open(str(logFileName+"_log.txt"), "a+")
+        if LOG:
+            print "log file created with name: " + str(logFileName)
+    except Exception as e:
+        if (DEBUG | LOG):
+            print "######### Log file creating error"
+    ############ Getting comapny List from database folder ########## ERROR[1]
     try:
         companyList = os.listdir(csvDbName)
         if (DEBUG):
@@ -58,9 +75,9 @@ def main():
             print "Got comapny list"
     except Exception as e:
         if (DEBUG | LOG):
-            print   "###### Folder opening error.:" + str(csvDbName)+",ERROR[1] :" + str(e)
+            errorlog(logFile,str(datetime.datetime.now())+ "###### Folder opening error.:" + str(csvDbName)+",ERROR[1] :" + str(e)+"\n")
 
-    ############ Creating Json database folder ####################
+    ############ Creating Json database folder #################### ERROR[2]
     if DBCREAT:
         try:
             if not os.path.exists(jsonDbName):
@@ -71,54 +88,32 @@ def main():
                 print "Json database folder created"
         except Exception as e:
             if (DEBUG | LOG):
-                print   "###### Folder creating error.:" + str(jsonDbName)+",ERROR[2]: "+ str(e)
+                errorlog(logFile,str(datetime.datetime.now())+ "###### Folder creating error.:" + str(jsonDbName)+",ERROR[2]: "+ str(e)+"\n")
 
     ############ Processing one by one company #############
     try:
         for company in companyList :
-            ####### Creating company in json database ########
-            if DBCREAT:
-                try:
-                    if not os.path.exists(str(jsonDbName + "/"+company)):
-                        os.makedirs(str(jsonDbName + "/"+company))
-                    if (DEBUG | LOG):
-                        print "Folder created for company : " + str(company)
-                except Exception as e:
-                    if (DEBUG | LOG):
-                        print   "###### Folder creating error for company.:" + str(company)+",ERROR[3]: "+ str(e)
 
-            ######## Getting remote list presented in company #####
+            ######## Getting remote list presented in company ##### ERROR[3]
             try:
                 remoteList = os.listdir(str(csvDbName+ "/"+company))
                 if DEBUG:
                     print "Got remote list for company : " + str(company) + ":" + str(remoteList)
             except Exception as e:
                 if (DEBUG | LOG):
-                    print "###### Getting Remote list ERROR[4] : " + str(e)
+                    errorlog(logFile,str(datetime.datetime.now())+ "###### Getting Remote list ERROR[3] : " + str(e)+"\n")
 
             ######## Processing one by on remote #############
 
             for remote in remoteList:
-
-                ###### Creating folder for remote ##########
-                if DBCREAT:
-                    try:
-                        if not os.path.exists(str(csvDbName+ "/"+company+ "/"+remote)):
-                            os.makedirs(str(csvDbName+ "/"+company+ "/"+remote))
-                        if (DEBUG | LOG):
-                            print "Folder created for remote : " + str(remote) + ", for company: " + str(company)
-                    except Exception as e:
-                        if (DEBUG | LOG):
-                            print "###### Folder creating error for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[5]: " +str(e)
-
-                ###### Getting remote file name ###########
+                ###### Getting remote file name ########### ERROR[4]
                 try:
                     remoteName = os.listdir(str(csvDbName+ "/"+company+ "/"+remote))
                 except Exception as e:
                     if (DEBUG | LOG):
-                        print "###### File not found for remote:" + str(remote) + ", for company: " + str(company)+",ERROR[6]: " +str(e)
+                        errorlog(logFile,str(datetime.datetime.now())+ "###### File not found for remote:" + str(remote) + ", for company: " + str(company)+",ERROR[4]: " +str(e)+"\n")
 
-                ########## file opening ####################
+                ########## file opening #################### ERROR[5]
                 for remoteFile in remoteName:
                     try:
                         csvFileHandler = open(str(csvDbName+ "/"+company+ "/"+remote +"/" + remoteFile),"r")
@@ -126,9 +121,9 @@ def main():
                             print "File opened for remote file: " +str(remoteFile)+", for remote: "+ str(remote) + ", for company: " + str(company)
                     except Exception as e:
                         if (DEBUG | LOG):
-                             print "###### File opening error for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[7]: " +str(e)
+                             errorlog(logFile,str(datetime.datetime.now())+ "###### File opening error for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[5]: " +str(e)+"\n")
 
-                    ########## Reading remote csv file ############
+                    ########## Reading remote csv file ############ ERROR[6]
                     try:
                         csvFileData = csvFileHandler.readlines();
                         keyCodeArray = []
@@ -139,9 +134,9 @@ def main():
                             print "File read successfully for remote file: " +str(remoteFile)+", for remote: "+ str(remote) + ", for company: " + str(company)
                     except Exception as e:
                         if (DEBUG | LOG):
-                             print "###### File reading error for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[8]: " +str(e)
+                            errorlog(logFile,str(datetime.datetime.now())+ "###### File reading error for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[6]: " +str(e)+"\n")
 
-                    ########### Parsing file data line by line AND assigning to parameters #######
+                    ########### Parsing file data line by line AND assigning to parameters ####### ERROR[7]
                     for csvLineNo,data in enumerate(csvFileData):
                         try:
                             data =  data.split(",")
@@ -157,32 +152,67 @@ def main():
                                 print "Got parameters for remote file: " +str(remoteFile)+", for remote: "+ str(remote) + ", for company: " + str(company)
                         except Exception as e:
                             if (DEBUG | LOG):
-                                print "###### Parameter extracting error for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[9]: " +str(e)
+                                errorlog(logFile,str(datetime.datetime.now())+"###### Parameter extracting error for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[7]: " +str(e)+"\n")
 
-                    ############## CSV File Closing ###############################
+                    ############### Cheking NEC PROTOCOL ###################### ERROR[8]
+                    try:
+                        if protocolName.upper() == matchProtocol:
+                            if(DEBUG|LOG):
+                                print "NEC protocol foud for remote file: " +str(remoteFile)+", for remote: "+ str(remote) + ", for company: " + str(company)
+                            errorlog(logFile,"NEC protocol found Json not created , for remote file: " +str(remoteFile)+", for remote: "+ str(remote) + ", for company: " + str(company)+"\n")
+                            continue
+                    except Exception as e:
+                        if (DEBUG | LOG):
+                            errorlog(logFile,str(datetime.datetime.now())+"###### NEC protocol search error for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[8]: " +str(e)+"\n")
+
+                    ############## CSV File Closing ############################### ERROR[9]
                     try:
                         csvFileHandler.close()
+                        jsonFileName =""
                         if (DEBUG | LOG):
                             print "File closed for remote file: " +str(remoteFile)+", for remote: "+ str(remote) + ", for company: " + str(company)
                     except Exception as e:
                         if (DEBUG | LOG):
-                             print "###### File closing error for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[10]: " +str(e)
+                             errorlog(logFile,str(datetime.datetime.now())+ "###### File closing error for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[9]: " +str(e)+"\n")
 
-                    ############# Creating Json File ################################
-                    #if DBCREAT:
-                    try:
-                        jsonFileName = remoteFile.split('.')[0].replace(',','_') + ".json"
-                       # jsonFileHandler = open(str(jsonDbName + "/"+company+ "/"+remote +"/" + jsonFileName),"a")
-                        jsonLineNo =0
-                        if (DEBUG | LOG):
-                            print "Json File created for remote file: " +str(remoteFile)+", for remote: "+ str(remote) + ", for company: " + str(company)
-                    except Exception as e:
-                        if (DEBUG | LOG):
-                             print "###### Json File creating error for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[11]: " +str(e)
+                    ####### Creating company in json database ######## ERROR[10]
+                    if DBCREAT:
+                        try:
+                            if not os.path.exists(str(jsonDbName + "/"+company)):
+                                os.makedirs(str(jsonDbName + "/"+company))
+                            if (DEBUG | LOG):
+                                print "Folder created for company : " + str(company)
+                        except Exception as e:
+                            if (DEBUG | LOG):
+                                errorlog(logFile,str(datetime.datetime.now())+ "###### Folder creating error for company.:" + str(company)+",ERROR[10]: "+ str(e)+"\n")
+
+                        ###### Creating folder for remote ########## ERROR[11]
+                        try:
+                            if not os.path.exists(str(jsonDbName+ "/"+company+ "/"+remote)):
+                                os.makedirs(str(jsonDbName+ "/"+company+ "/"+remote))
+                                if (DEBUG | LOG):
+                                    print "Folder created for remote : " + str(remote) + ", for company: " + str(company)
+                        except Exception as e:
+                            if (DEBUG | LOG):
+                                errorlog(logFile,str(datetime.datetime.now())+ "###### Folder creating error for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[11]: " +str(e)+"\n")
+
+                        ############# Creating Json File ################################ ERROR[12]
+                        try:
+                            jsonFileName = remoteFile.split('.')[0].replace(',','_') + ".json"
+                            jsonFileHandler = open(str(jsonDbName + "/"+company+ "/"+remote +"/" + jsonFileName),"a+")
+                            jsonFileHandler.write("[\n")
+                            jsonLineNo =0
+                            pronto =""
+                            jsonData = ""
+                            if (DEBUG | LOG):
+                                print "Json File created for remote file: " +str(remoteFile)+", for remote: "+ str(remote) + ", for company: " + str(company)
+                        except Exception as e:
+                            if (DEBUG | LOG):
+                               errorlog(logFile,str(datetime.datetime.now())+  "###### Json File creating error for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[12]: " +str(e)+"\n")
 
                     ################ Creating Pronto & Json format for each key and writing to file ########################
                     for keyName, keyCode in zip(keyNameArray ,keyCodeArray):
-                        ############## IrpMaster Command Execution ######################################
+                        ############## IrpMaster Command Execution ###################################### ERROR[13]
                         try:
                             command = "irpmaster " + "-n "+ str(protocolName) + " -p " + "D=" + str(deviceNo) + " S=" + str(subdeviceNo) + " F=" + str(keyCode)
                             response = os.popen(command).read()
@@ -194,48 +224,65 @@ def main():
                                 print "Command response is: " + str(response)
                         except Exception as e:
                             if (DEBUG | LOG):
-                                 print "###### Command execution error for key: "+ str(keyName)+ ", for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[12]: " +str(e)
+                                errorlog(logFile,str(datetime.datetime.now())+ "###### Command execution error for key: "+ str(keyName)+ ", for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[13]: " +str(e)+"\n")
 
-                        ############### Command parsing for pronto ##################################
+                        ############### Command parsing for pronto ################################## ERROR[14]
                         try:
                            pronto = string.replace(response.split('\n')[1],' ',', 0x')
-                           pronto = "0x" + pronto
+                           pronto = "0x" + str(pronto)
                            prontoLen = len(pronto.split(','))
                            if (DEBUGPRONTO):
                                 print "Pronto generated for key: "+ str(keyName)+ ", for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)
                                 print "Generated pronto is: " + str(pronto)
                         except Exception as e:
                             if (DEBUG | LOG):
-                                print "###### Pronto generation error for key: "+ str(keyName)+ ", for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[13]: " +str(e)
+                                errorlog(logFile,str(datetime.datetime.now())+ "###### Pronto generation error for key: "+ str(keyName)+ ", for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[14]: " +str(e)+"\n")
 
-                        ############## creating json format ##############################
+                        ############## creating json format ############################## ERROR[15]
                         try:
-                            jsonData= json.dumps({"remoteName":remoteFile,"protocol": protocolName,"device": deviceNo,"subdevice": subdeviceNo,"key_code": keyCode,"key_name": keyName,"code_len": prontoLen,"pronto_code": pronto })
+                            jsonData= json.dumps({"remoteName":jsonFileName.split('.')[0],"protocol": protocolName,"device": deviceNo,"subdevice": subdeviceNo,"key_code": keyCode,"key_name": keyName,"code_len": prontoLen,"pronto_code": pronto,"company":company,"deviceName": remote })
                             if(DEBUGJSON):
                                 print "Json created for key: "+ str(keyName)+ ", for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)
                                 print "Created json is: " + str(jsonData)
                         except Exception as e:
                             if (DEBUG | LOG):
-                                 print "###### Json creation error for key"+ str(keyName)+ ", for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[13]: " +str(e)
+                                 errorlog(logFile,str(datetime.datetime.now())+ "###### Json creation error for key"+ str(keyName)+ ", for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[15]: " +str(e)+"\n")
 
-                        ############# writing to file ##################################
-                        #if DBCREAT:
-                        try:
-                            print "json file name: "+ str(jsonLineNo)
-                           # jsonFileHandler.write(jsonData)
-                            #if(jsonLineNo<len(keyCodeArray)-1):
+                        ############# writing to file ################################## ERROR[16]
+                        if DBCREAT:
+                            try:
+                                jsonFileHandler.write(jsonData)
+                                if(jsonLineNo<len(keyCodeArray)-1):
+                                   jsonFileHandler.write(",\n")
+                                jsonLineNo += 1
+                                if(DEBUG):
+                                    print "Json written succesfully in file:"+ str(jsonFileName)+", for key :"+ str(keyName)+ ", for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)
+                            except Exception as e:
+                                if (DEBUG | LOG):
+                                    errorlog(logFile,str(datetime.datetime.now())+ "##### Json writting error in file:"+ str(jsonFileName)+", for key :"+ str(keyName)+ ", for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+ str(company)+",ERROR[16]: " +str(e)+"\n")
 
-                               #jsonFileHandler.write(",\n")
-                            jsonLineNo += 1
-                            if(DEBUG):
-                                print "Json written succesfully in file:"+ str(jsonFileName)+"for key :"+ str(keyName)+ ", for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)
-                        except Exception as e:
-                            if (DEBUG | LOG):
-                                print "##### Json writting error in file:"+ str(jsonFileName)+"for key :"+ str(keyName)+ ", for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)
+                    ########### json file closed ################################## ERROR[17]
+                    try:
+                        jsonFileHandler.write("\n]")
+                        jsonFileHandler.close()
+                        if (DEBUG|LOG):
+                            print "Json file closed for file :"+ str(jsonFileName)+ ", for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)
+                    except Exception as e:
+                        if (DEBUG | LOG):
+                           errorlog(logFile,str(datetime.datetime.now())+ "##### Json file closing error for file :"+ str(jsonFileName)+ ", for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+ str(company)+",ERROR[17]: " +str(e)+"\n")
 
     except Exception as e:
         if (DEBUG | LOG):
-            print   "###### Folder opening error for comapany : " + str(company)+", ERROR[]: "+ str(e)
+            print "error"
+            print(str(datetime.datetime.now())+ "###### Folder opening error for comapany : " + str(company)+", ERROR[18]: "+ str(e)+"\n")
+    try:
+        logFile.close()
+        if LOG:
+            print "log file closed with name: " + str(logFileName)
+    except Exception as e:
+        if (DEBUG | LOG):
+            print "######### Log file closing error"
+
 
 if __name__ == '__main__':
     main()
