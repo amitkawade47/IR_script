@@ -13,6 +13,8 @@ import subprocess
 import string
 import json
 import datetime
+from subprocess import PIPE, Popen
+import shutil
 
 
 csvDbName ="Irdb_csv"
@@ -45,7 +47,7 @@ DEBUGJSON = False # for printing json
 LOG = True
 DBCREAT = True  #for json database log
 FILEDATA = False #for csv file data
-
+permissionToMove = False # for moving directory from one to anather
 EOF = True
 
 def errorlog(logFileObj,log):
@@ -109,6 +111,7 @@ def main():
                 ###### Getting remote file name ########### ERROR[4]
                 try:
                     remoteName = os.listdir(str(csvDbName+ "/"+company+ "/"+remote))
+                    permissionToMove = False
                 except Exception as e:
                     if (DEBUG | LOG):
                         errorlog(logFile,str(datetime.datetime.now())+ "###### File not found for remote:" + str(remote) + ", for company: " + str(company)+",ERROR[4]: " +str(e)+"\n")
@@ -154,13 +157,17 @@ def main():
                             if (DEBUG | LOG):
                                 errorlog(logFile,str(datetime.datetime.now())+"###### Parameter extracting error for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[7]: " +str(e)+"\n")
 
-                    ############### Cheking NEC PROTOCOL ###################### ERROR[8]
+                    ############### Cheking PROTOCOL in  ###################### ERROR[8]
                     try:
-                        if protocolName.upper() == matchProtocol:
+                        protocolCheckCommand = "irpmaster -n "+ protocolName.upper()
+                        commandResp = Popen(protocolCheckCommand, shell=True, stdout=PIPE, stderr=PIPE)
+                        stdout, stderr = commandResp.communicate()
+                        errorMsg = "%s"% stderr
+                        if errorMsg:
                             if(DEBUG|LOG):
-                                print "NEC protocol foud for remote file: " +str(remoteFile)+", for remote: "+ str(remote) + ", for company: " + str(company)
-                            errorlog(logFile,"NEC protocol found Json not created , for remote file: " +str(remoteFile)+", for remote: "+ str(remote) + ", for company: " + str(company)+"\n")
-                            continue
+                                print "No protocol found for remote file: " +str(remoteFile)+", for remote: "+ str(remote) + ", for company: " + str(company) + ", Error:" + str(errorMsg)
+                            errorlog(logFile,"No protocol found hence moving directory to another , for remote file: " +str(remoteFile)+", for remote: "+ str(remote) + ", for company: " + str(company)+", Error:" + str(errorMsg)+"\n")
+                            permissionToMove = True
                     except Exception as e:
                         if (DEBUG | LOG):
                             errorlog(logFile,str(datetime.datetime.now())+"###### NEC protocol search error for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[8]: " +str(e)+"\n")
@@ -174,8 +181,25 @@ def main():
                     except Exception as e:
                         if (DEBUG | LOG):
                              errorlog(logFile,str(datetime.datetime.now())+ "###### File closing error for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[9]: " +str(e)+"\n")
+                    ############ Moving company to Error Folder #################
+                    if permissionToMove:
+                        try:
+                            errorComapnies = "Remaining_Companies"
+                            if not os.path.exists(errorComapnies):
+                                os.mkdir(errorComapnies)
+                                if(DEBUG|LOG):
+                                    print "Directory created for & with name : " + errorComapnies
+                            else:
+                                if(DEBUG|LOG):
+                                    print "Directory already exists for & with name : " + errorComapnies
+                            shutil.move(csvDbName+ "/"+company ,errorComapnies+"/" )
+                            permissionToMove = False
+                            errorlog(logFile,"Directory :"+  str(company) +", moved to :"+str(errorComapnies)+ ", for remote file: " +str(remoteFile)+", for remote: "+ str(remote) + ", for company: " + str(company)+"\n")
+                            continue
+                        except Exception as e:
+                            errorlog(logFile,"Directory :"+  str(company) +", moving error to :"+str(errorComapnies)+ ", for remote file: " +str(remoteFile)+", for remote: "+ str(remote) + ", for company: " + str(company)+",ERROR[8]: " +str(e)+"\n")
 
-                    ####### Creating company in json database ######## ERROR[10]
+                    ####### Creating company in json folder######## ERROR[10]
                     if DBCREAT:
                         try:
                             if not os.path.exists(str(jsonDbName + "/"+company)):

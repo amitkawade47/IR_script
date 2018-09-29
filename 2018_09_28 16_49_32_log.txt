@@ -1,3 +1,0 @@
-NEC protocol found Json not created , for remote file: 32,159.csv, for remote: Unknown_2wire, for company: 2wire
-NEC protocol found Json not created , for remote file: 1,-1.csv, for remote: DVD_WINDVD, for company: ABIT
-NEC protocol found Json not created , for remote file: 0,191.csv, for remote: CONVERTER_DTA1080U, for company: AccessHD
