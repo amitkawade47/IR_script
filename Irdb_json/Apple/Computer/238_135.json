@@ -1,0 +1,17 @@
+[
+{"pronto_code": "", "protocol": "Apple", "subdevice": "135", "deviceName": "Computer", "device": "238", "key_name": "MENU", "company": "Apple", "code_len": 0, "remoteName": "238_135", "key_code": "1"},
+{"pronto_code": "", "protocol": "Apple", "subdevice": "135", "deviceName": "Computer", "device": "238", "key_name": "MENY/EXIT", "company": "Apple", "code_len": 0, "remoteName": "238_135", "key_code": "1"},
+{"pronto_code": "", "protocol": "Apple", "subdevice": "135", "deviceName": "Computer", "device": "238", "key_name": "PLAY/PAUSE", "company": "Apple", "code_len": 0, "remoteName": "238_135", "key_code": "2"},
+{"pronto_code": "", "protocol": "Apple", "subdevice": "135", "deviceName": "Computer", "device": "238", "key_name": "PLAY/PAUSE/OK", "company": "Apple", "code_len": 0, "remoteName": "238_135", "key_code": "2"},
+{"pronto_code": "", "protocol": "Apple", "subdevice": "135", "deviceName": "Computer", "device": "238", "key_name": "PLAY PAUSE", "company": "Apple", "code_len": 0, "remoteName": "238_135", "key_code": "2"},
+{"pronto_code": "", "protocol": "Apple", "subdevice": "135", "deviceName": "Computer", "device": "238", "key_name": ">> NEXT", "company": "Apple", "code_len": 0, "remoteName": "238_135", "key_code": "3"},
+{"pronto_code": "", "protocol": "Apple", "subdevice": "135", "deviceName": "Computer", "device": "238", "key_name": "GER/SKIP FWD", "company": "Apple", "code_len": 0, "remoteName": "238_135", "key_code": "3"},
+{"pronto_code": "", "protocol": "Apple", "subdevice": "135", "deviceName": "Computer", "device": "238", "key_name": "SKIP >>", "company": "Apple", "code_len": 0, "remoteName": "238_135", "key_code": "3"},
+{"pronto_code": "", "protocol": "Apple", "subdevice": "135", "deviceName": "Computer", "device": "238", "key_name": "<< PREVIOUS", "company": "Apple", "code_len": 0, "remoteName": "238_135", "key_code": "4"},
+{"pronto_code": "", "protocol": "Apple", "subdevice": "135", "deviceName": "Computer", "device": "238", "key_name": "NSTER/SKIP REV", "company": "Apple", "code_len": 0, "remoteName": "238_135", "key_code": "4"},
+{"pronto_code": "", "protocol": "Apple", "subdevice": "135", "deviceName": "Computer", "device": "238", "key_name": "SKIP <<", "company": "Apple", "code_len": 0, "remoteName": "238_135", "key_code": "4"},
+{"pronto_code": "", "protocol": "Apple", "subdevice": "135", "deviceName": "Computer", "device": "238", "key_name": "+", "company": "Apple", "code_len": 0, "remoteName": "238_135", "key_code": "5"},
+{"pronto_code": "", "protocol": "Apple", "subdevice": "135", "deviceName": "Computer", "device": "238", "key_name": "PIL UPP/+", "company": "Apple", "code_len": 0, "remoteName": "238_135", "key_code": "5"},
+{"pronto_code": "", "protocol": "Apple", "subdevice": "135", "deviceName": "Computer", "device": "238", "key_name": "-", "company": "Apple", "code_len": 0, "remoteName": "238_135", "key_code": "6"},
+{"pronto_code": "", "protocol": "Apple", "subdevice": "135", "deviceName": "Computer", "device": "238", "key_name": "PIL NER/-", "company": "Apple", "code_len": 0, "remoteName": "238_135", "key_code": "6"}
+]

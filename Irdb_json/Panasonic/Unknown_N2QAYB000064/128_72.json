@@ -1,0 +1,21 @@
+[
+{"pronto_code": "", "protocol": "Panasonic2", "subdevice": "72", "deviceName": "Unknown_N2QAYB000064", "device": "128", "key_name": "Freeze", "company": "Panasonic", "code_len": 0, "remoteName": "128_72", "key_code": "2"},
+{"pronto_code": "", "protocol": "Panasonic2", "subdevice": "72", "deviceName": "Unknown_N2QAYB000064", "device": "128", "key_name": "KEY_POWER", "company": "Panasonic", "code_len": 0, "remoteName": "128_72", "key_code": "61"},
+{"pronto_code": "", "protocol": "Panasonic2", "subdevice": "72", "deviceName": "Unknown_N2QAYB000064", "device": "128", "key_name": "KEY_POWER", "company": "Panasonic", "code_len": 0, "remoteName": "128_72", "key_code": "62"},
+{"pronto_code": "", "protocol": "Panasonic2", "subdevice": "72", "deviceName": "Unknown_N2QAYB000064", "device": "128", "key_name": "KEY_POWER", "company": "Panasonic", "code_len": 0, "remoteName": "128_72", "key_code": "63"},
+{"pronto_code": "", "protocol": "Panasonic2", "subdevice": "72", "deviceName": "Unknown_N2QAYB000064", "device": "128", "key_name": "KEY_UP", "company": "Panasonic", "code_len": 0, "remoteName": "128_72", "key_code": "90"},
+{"pronto_code": "", "protocol": "Panasonic2", "subdevice": "72", "deviceName": "Unknown_N2QAYB000064", "device": "128", "key_name": "KEY_DOWN", "company": "Panasonic", "code_len": 0, "remoteName": "128_72", "key_code": "91"},
+{"pronto_code": "", "protocol": "Panasonic2", "subdevice": "72", "deviceName": "Unknown_N2QAYB000064", "device": "128", "key_name": "KEY_LEFT", "company": "Panasonic", "code_len": 0, "remoteName": "128_72", "key_code": "92"},
+{"pronto_code": "", "protocol": "Panasonic2", "subdevice": "72", "deviceName": "Unknown_N2QAYB000064", "device": "128", "key_name": "KEY_RIGHT", "company": "Panasonic", "code_len": 0, "remoteName": "128_72", "key_code": "93"},
+{"pronto_code": "", "protocol": "Panasonic2", "subdevice": "72", "deviceName": "Unknown_N2QAYB000064", "device": "128", "key_name": "Default", "company": "Panasonic", "code_len": 0, "remoteName": "128_72", "key_code": "97"},
+{"pronto_code": "", "protocol": "Panasonic2", "subdevice": "72", "deviceName": "Unknown_N2QAYB000064", "device": "128", "key_name": "Input_Select", "company": "Panasonic", "code_len": 0, "remoteName": "128_72", "key_code": "109"},
+{"pronto_code": "", "protocol": "Panasonic2", "subdevice": "72", "deviceName": "Unknown_N2QAYB000064", "device": "128", "key_name": "KEY_ENTER", "company": "Panasonic", "code_len": 0, "remoteName": "128_72", "key_code": "114"},
+{"pronto_code": "", "protocol": "Panasonic2", "subdevice": "72", "deviceName": "Unknown_N2QAYB000064", "device": "128", "key_name": "KEY_MENU", "company": "Panasonic", "code_len": 0, "remoteName": "128_72", "key_code": "122"},
+{"pronto_code": "", "protocol": "Panasonic2", "subdevice": "72", "deviceName": "Unknown_N2QAYB000064", "device": "128", "key_name": "Picture_Adj", "company": "Panasonic", "code_len": 0, "remoteName": "128_72", "key_code": "126"},
+{"pronto_code": "", "protocol": "Panasonic2", "subdevice": "72", "deviceName": "Unknown_N2QAYB000064", "device": "128", "key_name": "KEY_FAVORITES", "company": "Panasonic", "code_len": 0, "remoteName": "128_72", "key_code": "129"},
+{"pronto_code": "", "protocol": "Panasonic2", "subdevice": "72", "deviceName": "Unknown_N2QAYB000064", "device": "128", "key_name": "Theater_Room", "company": "Panasonic", "code_len": 0, "remoteName": "128_72", "key_code": "142"},
+{"pronto_code": "", "protocol": "Panasonic2", "subdevice": "72", "deviceName": "Unknown_N2QAYB000064", "device": "128", "key_name": "Living_Room", "company": "Panasonic", "code_len": 0, "remoteName": "128_72", "key_code": "143"},
+{"pronto_code": "", "protocol": "Panasonic2", "subdevice": "72", "deviceName": "Unknown_N2QAYB000064", "device": "128", "key_name": "KEY_ENTER", "company": "Panasonic", "code_len": 0, "remoteName": "128_72", "key_code": "144"},
+{"pronto_code": "", "protocol": "Panasonic2", "subdevice": "72", "deviceName": "Unknown_N2QAYB000064", "device": "128", "key_name": "KEY_SLEEP", "company": "Panasonic", "code_len": 0, "remoteName": "128_72", "key_code": "153"},
+{"pronto_code": "", "protocol": "Panasonic2", "subdevice": "72", "deviceName": "Unknown_N2QAYB000064", "device": "128", "key_name": "Aspect", "company": "Panasonic", "code_len": 0, "remoteName": "128_72", "key_code": "222"}
+]

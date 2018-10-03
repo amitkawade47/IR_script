@@ -1,0 +1,8 @@
+[
+{"pronto_code": "", "protocol": "Apple", "subdevice": "135", "deviceName": "iPod", "device": "238", "key_name": "MENU", "company": "Apple", "code_len": 0, "remoteName": "238_135", "key_code": "1"},
+{"pronto_code": "", "protocol": "Apple", "subdevice": "135", "deviceName": "iPod", "device": "238", "key_name": "PLAY/PAUSE", "company": "Apple", "code_len": 0, "remoteName": "238_135", "key_code": "2"},
+{"pronto_code": "", "protocol": "Apple", "subdevice": "135", "deviceName": "iPod", "device": "238", "key_name": "SKIP >>", "company": "Apple", "code_len": 0, "remoteName": "238_135", "key_code": "3"},
+{"pronto_code": "", "protocol": "Apple", "subdevice": "135", "deviceName": "iPod", "device": "238", "key_name": "SKIP <<", "company": "Apple", "code_len": 0, "remoteName": "238_135", "key_code": "4"},
+{"pronto_code": "", "protocol": "Apple", "subdevice": "135", "deviceName": "iPod", "device": "238", "key_name": "VOLUME +", "company": "Apple", "code_len": 0, "remoteName": "238_135", "key_code": "5"},
+{"pronto_code": "", "protocol": "Apple", "subdevice": "135", "deviceName": "iPod", "device": "238", "key_name": "VOLUME -", "company": "Apple", "code_len": 0, "remoteName": "238_135", "key_code": "6"}
+]

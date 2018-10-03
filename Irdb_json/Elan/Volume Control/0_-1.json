@@ -1,0 +1,6 @@
+[
+{"pronto_code": "", "protocol": "Velleman", "subdevice": "-1", "deviceName": "Volume Control", "device": "0", "key_name": "ON", "company": "Elan", "code_len": 0, "remoteName": "0_-1", "key_code": "32"},
+{"pronto_code": "", "protocol": "Velleman", "subdevice": "-1", "deviceName": "Volume Control", "device": "0", "key_name": "OFF", "company": "Elan", "code_len": 0, "remoteName": "0_-1", "key_code": "33"},
+{"pronto_code": "", "protocol": "Velleman", "subdevice": "-1", "deviceName": "Volume Control", "device": "0", "key_name": "UP", "company": "Elan", "code_len": 0, "remoteName": "0_-1", "key_code": "34"},
+{"pronto_code": "", "protocol": "Velleman", "subdevice": "-1", "deviceName": "Volume Control", "device": "0", "key_name": "DOWN", "company": "Elan", "code_len": 0, "remoteName": "0_-1", "key_code": "35"}
+]

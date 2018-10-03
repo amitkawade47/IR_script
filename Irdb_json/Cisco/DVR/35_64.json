@@ -1,0 +1,23 @@
+[
+{"pronto_code": "", "protocol": "Nokia32", "subdevice": "64", "deviceName": "DVR", "device": "35", "key_name": "0", "company": "Cisco", "code_len": 0, "remoteName": "35_64", "key_code": "0"},
+{"pronto_code": "", "protocol": "Nokia32", "subdevice": "64", "deviceName": "DVR", "device": "35", "key_name": "1", "company": "Cisco", "code_len": 0, "remoteName": "35_64", "key_code": "1"},
+{"pronto_code": "", "protocol": "Nokia32", "subdevice": "64", "deviceName": "DVR", "device": "35", "key_name": "2", "company": "Cisco", "code_len": 0, "remoteName": "35_64", "key_code": "2"},
+{"pronto_code": "", "protocol": "Nokia32", "subdevice": "64", "deviceName": "DVR", "device": "35", "key_name": "3", "company": "Cisco", "code_len": 0, "remoteName": "35_64", "key_code": "3"},
+{"pronto_code": "", "protocol": "Nokia32", "subdevice": "64", "deviceName": "DVR", "device": "35", "key_name": "4", "company": "Cisco", "code_len": 0, "remoteName": "35_64", "key_code": "4"},
+{"pronto_code": "", "protocol": "Nokia32", "subdevice": "64", "deviceName": "DVR", "device": "35", "key_name": "5", "company": "Cisco", "code_len": 0, "remoteName": "35_64", "key_code": "5"},
+{"pronto_code": "", "protocol": "Nokia32", "subdevice": "64", "deviceName": "DVR", "device": "35", "key_name": "6", "company": "Cisco", "code_len": 0, "remoteName": "35_64", "key_code": "6"},
+{"pronto_code": "", "protocol": "Nokia32", "subdevice": "64", "deviceName": "DVR", "device": "35", "key_name": "8", "company": "Cisco", "code_len": 0, "remoteName": "35_64", "key_code": "8"},
+{"pronto_code": "", "protocol": "Nokia32", "subdevice": "64", "deviceName": "DVR", "device": "35", "key_name": "9", "company": "Cisco", "code_len": 0, "remoteName": "35_64", "key_code": "9"},
+{"pronto_code": "", "protocol": "Nokia32", "subdevice": "64", "deviceName": "DVR", "device": "35", "key_name": "LAST", "company": "Cisco", "code_len": 0, "remoteName": "35_64", "key_code": "10"},
+{"pronto_code": "", "protocol": "Nokia32", "subdevice": "64", "deviceName": "DVR", "device": "35", "key_name": "CHANNEL +", "company": "Cisco", "code_len": 0, "remoteName": "35_64", "key_code": "32"},
+{"pronto_code": "", "protocol": "Nokia32", "subdevice": "64", "deviceName": "DVR", "device": "35", "key_name": "CHANNEL -", "company": "Cisco", "code_len": 0, "remoteName": "35_64", "key_code": "33"},
+{"pronto_code": "", "protocol": "Nokia32", "subdevice": "64", "deviceName": "DVR", "device": "35", "key_name": "SEARCH >>", "company": "Cisco", "code_len": 0, "remoteName": "35_64", "key_code": "40"},
+{"pronto_code": "", "protocol": "Nokia32", "subdevice": "64", "deviceName": "DVR", "device": "35", "key_name": "SEARCH <<", "company": "Cisco", "code_len": 0, "remoteName": "35_64", "key_code": "41"},
+{"pronto_code": "", "protocol": "Nokia32", "subdevice": "64", "deviceName": "DVR", "device": "35", "key_name": "RECORDED TV", "company": "Cisco", "code_len": 0, "remoteName": "35_64", "key_code": "68"},
+{"pronto_code": "", "protocol": "Nokia32", "subdevice": "64", "deviceName": "DVR", "device": "35", "key_name": "MENU", "company": "Cisco", "code_len": 0, "remoteName": "35_64", "key_code": "84"},
+{"pronto_code": "", "protocol": "Nokia32", "subdevice": "64", "deviceName": "DVR", "device": "35", "key_name": "EXIT TO TV", "company": "Cisco", "code_len": 0, "remoteName": "35_64", "key_code": "85"},
+{"pronto_code": "", "protocol": "Nokia32", "subdevice": "64", "deviceName": "DVR", "device": "35", "key_name": "CURSOR UP", "company": "Cisco", "code_len": 0, "remoteName": "35_64", "key_code": "88"},
+{"pronto_code": "", "protocol": "Nokia32", "subdevice": "64", "deviceName": "DVR", "device": "35", "key_name": "CURSOR DOWN", "company": "Cisco", "code_len": 0, "remoteName": "35_64", "key_code": "89"},
+{"pronto_code": "", "protocol": "Nokia32", "subdevice": "64", "deviceName": "DVR", "device": "35", "key_name": "CURSOR LEFT", "company": "Cisco", "code_len": 0, "remoteName": "35_64", "key_code": "90"},
+{"pronto_code": "", "protocol": "Nokia32", "subdevice": "64", "deviceName": "DVR", "device": "35", "key_name": "C", "company": "Cisco", "code_len": 0, "remoteName": "35_64", "key_code": "134"}
+]

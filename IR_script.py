@@ -15,10 +15,17 @@ import json
 import datetime
 from subprocess import PIPE, Popen
 import shutil
+import pymongo
+from pymongo import MongoClient
 
 
 csvDbName ="Irdb_csv"
 jsonDbName ="Irdb_json"
+
+hostName = "localhost"
+portNum = 27017
+mongoDbName = "IrDb"
+mongoCollection ="version3"
 
 companyList = []
 remoteList = []
@@ -46,6 +53,7 @@ DEBUGPRONTO = False #for printing generated pronto
 DEBUGJSON = False # for printing json
 LOG = True
 DBCREAT = True  #for json database log
+MONGODB = True #for mongoDB connection and insertion
 FILEDATA = False #for csv file data
 permissionToMove = False # for moving directory from one to anather
 EOF = True
@@ -67,6 +75,19 @@ def main():
     except Exception as e:
         if (DEBUG | LOG):
             print "######### Log file creating error"
+
+    ############# make MongoDB connection #########################
+    if MONGODB:
+        try:
+            dbClient = MongoClient(hostName,portNum)
+            irDb = dbClient[mongoDbName]
+            irJsonCol = irDb[mongoCollection]
+            if(DEBUG|LOG):
+                print "Made database connection successfully"
+        except Exception as e:
+            if (DEBUG | LOG):
+                errorlog(logFile,str(datetime.datetime.now())+ "###### Database connection ERROR[1] :" + str(e)+"\n")
+
     ############ Getting comapny List from database folder ########## ERROR[1]
     try:
         companyList = os.listdir(csvDbName)
@@ -192,7 +213,24 @@ def main():
                             else:
                                 if(DEBUG|LOG):
                                     print "Directory already exists for & with name : " + errorComapnies
-                            shutil.move(csvDbName+ "/"+company ,errorComapnies+"/" )
+
+                            if not os.path.exists(errorComapnies+"/"+company):
+                                os.mkdir(errorComapnies+"/"+company)
+                                if(DEBUG|LOG):
+                                    print "Directory created for company  & with name : " + company
+                            else:
+                                if(DEBUG|LOG):
+                                    print "Directory already exists for company  & with name : " + company
+
+                            if not os.path.exists(errorComapnies+"/"+company+"/"+ remote):
+                                os.mkdir(errorComapnies+"/"+company+"/"+remote)
+                                if(DEBUG|LOG):
+                                    print "Directory created for remote  & with name : " +remote+", in company: "+ company
+                            else:
+                                if(DEBUG|LOG):
+                                    print "Directory already exists for company  & with name : " +remote+", in company: "+ company
+
+                            shutil.move(csvDbName+ "/"+company + "/"+remote+"/"+remoteFile ,errorComapnies+"/" +company+"/"+remote+"/" )
                             permissionToMove = False
                             errorlog(logFile,"Directory :"+  str(company) +", moved to :"+str(errorComapnies)+ ", for remote file: " +str(remoteFile)+", for remote: "+ str(remote) + ", for company: " + str(company)+"\n")
                             continue
@@ -264,13 +302,23 @@ def main():
 
                         ############## creating json format ############################## ERROR[15]
                         try:
-                            jsonData= json.dumps({"remoteName":jsonFileName.split('.')[0],"protocol": protocolName,"device": deviceNo,"subdevice": subdeviceNo,"key_code": keyCode,"key_name": keyName,"code_len": prontoLen,"pronto_code": pronto,"company":company,"deviceName": remote })
+                            jsonFormat= {"remoteName":jsonFileName.split('.')[0],"protocol": protocolName,"device": deviceNo,"subdevice": subdeviceNo,"key_code": keyCode,"key_name": keyName,"code_len": prontoLen,"pronto_code": pronto,"company":company,"deviceName": remote }
+                            jsonData= json.dumps(jsonFormat)
                             if(DEBUGJSON):
                                 print "Json created for key: "+ str(keyName)+ ", for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)
                                 print "Created json is: " + str(jsonData)
                         except Exception as e:
                             if (DEBUG | LOG):
                                  errorlog(logFile,str(datetime.datetime.now())+ "###### Json creation error for key"+ str(keyName)+ ", for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[15]: " +str(e)+"\n")
+
+                        ################# Inserting in MongoDb ####################
+                        if MONGODB:
+                            try:
+                                irJsonCol.insert_one(jsonFormat)
+                                print "DB insertion done for key: "+ str(keyName)+ ", for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)
+                            except Exception as e:
+                                 if (DEBUG | LOG):
+                                     errorlog(logFile,str(datetime.datetime.now())+ "###### Database insertion error for key"+ str(keyName)+ ", for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)+",ERROR[15]: " +str(e)+"\n")
 
                         ############# writing to file ################################## ERROR[16]
                         if DBCREAT:
@@ -299,6 +347,15 @@ def main():
         if (DEBUG | LOG):
             print "error"
             print(str(datetime.datetime.now())+ "###### Folder opening error for comapany : " + str(company)+", ERROR[18]: "+ str(e)+"\n")
+
+    if MONGODB:
+        try:
+            dbClient.close()
+            print "DB insertion done for key: "+ str(keyName)+ ", for remote file: "+str(remoteFile)+ ", for remote: " + str(remote) + ", for company: " + str(company)
+        except Exception as e:
+             if (DEBUG | LOG):
+                 errorlog(logFile,str(datetime.datetime.now())+ "###### Database connection clossing ERROR[15]: " +str(e)+"\n")
+
     try:
         logFile.close()
         if LOG:
